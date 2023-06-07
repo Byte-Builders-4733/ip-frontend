@@ -1,7 +1,8 @@
-import { ReactNode } from "react";
+import Link from "next/link";
+import { ReactNode, MouseEventHandler } from "react";
 
-export default function Button({ dark=false, type="submit", className, children }
-		: { dark?:boolean, type?: "submit" | "button", className?: string, children: ReactNode }) {
+export default function Button({ dark=false, type="submit", className, href, children, onClick }
+		: { dark?:boolean, type?: "submit" | "button", className?: string, href?: string, children: ReactNode, onClick?: MouseEventHandler<HTMLButtonElement> }) {
 
 	let colors: string;
 
@@ -10,9 +11,15 @@ export default function Button({ dark=false, type="submit", className, children 
 	} else {
 		colors = 'text-white hover:bg-zinc-600 bg-shadow'
 	}
-	
-	return  <button type={type} className={`${colors} inline-block
+
+	const finalClassName = `${colors} inline-block
 		focus:ring-4 focus:outline-none focus:ring-blue-300
-		font-medium rounded-2xl text-sm px-4 py-2 shadow ${className}`}
-	>{children}</button>;
+		font-medium rounded-2xl text-sm px-4 py-2 shadow ${className}`;
+	
+
+
+	return href ?
+		<Link href={href} className={finalClassName}>{children}</Link>
+		: <button type={type} className={finalClassName} onClick={onClick}>{children}</button>;
+	
 }
