@@ -12,8 +12,15 @@ export default function Header() {
 			</Link>
 			<nav className="navbar flex gap-10 font-bold uppercase text-sm">
 				<Link href="test" className="hover:underline hover:text-zinc-600">Тест</Link>
-				<Link href="register" className="hover:underline hover:text-zinc-600">Регистрация</Link>
-				<Link href="login" className="hover:underline hover:text-zinc-600">Вход</Link>
+				
+				{!localStorage.getItem('auth_token') && <>
+					<Link href="register" className="hover:underline hover:text-zinc-600">Регистрация</Link>
+					<Link href="login" className="hover:underline hover:text-zinc-600">Вход</Link>
+				</>}
+				{localStorage.getItem('auth_token') &&
+					<Link href="account" className="hover:underline hover:text-zinc-600">{localStorage.getItem('username')}</Link>
+				}
+				
 			</nav>
 		</div>
 	</header>

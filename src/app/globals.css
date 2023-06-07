@@ -25,6 +25,13 @@ body {
   box-shadow: 0px 2px 4px #00000020;
 }
 
+@layer components {
+.input-error {
+  @apply text-red-700 block h-3 text-sm;
+}
+}
+/* text-red-700 block h-3 text-sm */
+
 /* * {
   outline: 1px dashed red;
 } */

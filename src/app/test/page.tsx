@@ -49,8 +49,10 @@ export default function Test() {
 
 		if (totalCount.current !== questions!.length)
 			toggleDisplayButtonNext();
-		else
-			setDone(true);
+		else{
+			// hack
+			localStorage.setItem('testCount', (Number(localStorage.getItem('testCount')) + 1).toString())
+			setDone(true);}
 	}
 
 	return <>
