@@ -8,7 +8,6 @@ import Input from '@/components/Input';
 import Button from '@/components/Button';
 
 export default function Index() {
-	console.log(process.env.API)
 	const [words, setWords] = useState<{term: string, definition: string}[]>([]);
 	const [displayTable, setDisplayTable] = useState<boolean>(false);
 	const charsRu = ['А','Б','В','Г','Д','Е','Ж','З','И','К','Л','М','Н','О','П','Р','С','Т','У','Ф','Х','Ц','Ч','Ш','Щ','Э','Ю','Я'];
@@ -76,7 +75,7 @@ export default function Index() {
 					{[{chars: charsRu, lang: 'ru'}, {chars: charsEn, lang: 'en'}].map(({chars, lang} : {chars: string[], lang: string}) => 
 						<p key={lang} id={lang} className="flex flex-wrap justify-center">
 							{chars.map((c, i) =>
-								<Link href="" key={i} className="inline-block text-2xl px-2.5 underline hover:no-underline hover:text-zinc-600" onClick={() => updateWordList(c)}>{c}</Link>
+								<Link href="" key={i} className="inline-block text-2xl px-2.5 underline hover:no-underline hover:text-zinc-600" onClick={(e) => {e.preventDefault(); updateWordList(c)}}>{c}</Link>
 							)}
 						</p>
 					)}
