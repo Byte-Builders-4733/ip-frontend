@@ -6,7 +6,7 @@ import Input from '@/components/Input';
 import Button from '@/components/Button'
 import { redirect } from 'next/navigation';
 
-export default function Register() {
+export default function Signup() {
 	const [emailError, setEmailError] = useState<string>()
 	const [usernameError, setUsernameError] = useState<string>()
 	const [passwordError, setPasswordError] = useState<string>()

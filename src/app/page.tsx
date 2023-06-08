@@ -23,7 +23,7 @@ export default function Index() {
 
 	const updateWordList = (c = '') => {
 		const url = new URL(c ? `/api/${c}/` : '/api/v1/words/', process.env.API!);
-		url.searchParams.append('format', 'json')
+		// url.searchParams.append('format', 'json')
 		fetch(url, {cache: 'force-cache'})
 			.catch(err => {setDisplayTable(false); setError(err)})
 			.then(res => res ? res.json(): null)

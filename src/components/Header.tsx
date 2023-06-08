@@ -23,7 +23,7 @@ export default function Header() {
 				<Link href="test" className="hover:underline hover:text-zinc-600">Тест</Link>
 				
 				{!localToken && <>
-					<Link href="register" className="hover:underline hover:text-zinc-600">Регистрация</Link>
+					<Link href="signup" className="hover:underline hover:text-zinc-600">Регистрация</Link>
 					<Link href="login" className="hover:underline hover:text-zinc-600">Вход</Link>
 				</>}
 				{localToken &&
