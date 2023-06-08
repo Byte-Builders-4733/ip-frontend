@@ -1,8 +1,17 @@
 import Image from "next/image"
 import Link from "next/link"
+import { useState, useEffect } from "react"
 
 export default function Header() {
-	return <header className="main-header sticky top-0 bg-white z-50">
+	const [localToken, setLocalToken] = useState('');
+	const [localUsername, setLocalUsername] = useState('');
+
+	useEffect(() => {
+		setLocalToken(window.localStorage.getItem('auth_token')!);
+		setLocalUsername(window.localStorage.getItem('username')!);
+	}, [setLocalToken, setLocalUsername])
+
+	return <header className="main-header sticky top-0 bg-white z-10">
 		<div className="container py-8 flex items-center justify-between">
 			<Link href="/">
 				<div className="logo flex items-center gap-4">
@@ -13,12 +22,12 @@ export default function Header() {
 			<nav className="navbar flex gap-10 font-bold uppercase text-sm">
 				<Link href="test" className="hover:underline hover:text-zinc-600">Тест</Link>
 				
-				{!localStorage.getItem('auth_token') && <>
+				{!localToken && <>
 					<Link href="register" className="hover:underline hover:text-zinc-600">Регистрация</Link>
 					<Link href="login" className="hover:underline hover:text-zinc-600">Вход</Link>
 				</>}
-				{localStorage.getItem('auth_token') &&
-					<Link href="account" className="hover:underline hover:text-zinc-600">{localStorage.getItem('username')}</Link>
+				{localToken &&
+					<Link href="account" className="hover:underline hover:text-zinc-600">{localUsername}</Link>
 				}
 				
 			</nav>
