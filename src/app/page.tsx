@@ -8,6 +8,7 @@ import Input from '@/components/Input';
 import Button from '@/components/Button';
 
 export default function Index() {
+	console.log(process.env.API)
 	const [words, setWords] = useState<{term: string, definition: string}[]>([]);
 	const [displayTable, setDisplayTable] = useState<boolean>(false);
 	const charsRu = ['А','Б','В','Г','Д','Е','Ж','З','И','К','Л','М','Н','О','П','Р','С','Т','У','Ф','Х','Ц','Ч','Ш','Щ','Э','Ю','Я'];
