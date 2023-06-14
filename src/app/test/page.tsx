@@ -12,8 +12,10 @@ import Button from '@/components/Button';
 import { IQuestion } from '@/lib/types'
 import { tryRefresh } from '@/lib/utils';
 import SwiperButton from '@/components/SwiperButton';
+import Link from 'next/link';
 
 export default function Test() {
+	const [localToken, setLocalToken] = useState('');
 	const [questions, setQuestions] = useState<IQuestion[]>();
 	const rightCount = useRef(0);
 	const totalCount = useRef(0);
@@ -21,6 +23,12 @@ export default function Test() {
 	const [done, setDone] = useState(false);
 
 	useEffect(() => {
+		const token = localStorage.getItem('auth_token');
+		if (!token)
+			return;
+
+		setLocalToken(token);
+
 		const url = new URL('/api/v1/tests/', process.env.API)
 		url.searchParams.append('format', 'json')
 		fetch(url, {cache: 'no-store'})
@@ -55,26 +63,34 @@ export default function Test() {
 
 	return <>
 		<Header />
-		<main className="container text-center">
-			<Image className="mt-10 mx-auto" src="/img/test.png" alt="" width={261} height={151} />
-			<p className="mt-4">{rightCount.current} / {totalCount.current} правильных ответов</p>
+		{localToken && 
+			<main className="container text-center">
+				<Image className="mt-10 mx-auto" src="/img/test.png" alt="" width={261} height={151} />
+				<p className="mt-4">{rightCount.current} / {totalCount.current} правильных ответов</p>
 
-			<Swiper
-				allowTouchMove={false}>
-				{questions && questions.map((question, i) =>
-					<SwiperSlide key={i}>
-						<Question questionNumber={i} question={question} onPick={onPick} />
-						<SwiperButton shown={displayButtonNext} onClick={toggleDisplayButtonNext} />
-					</SwiperSlide>
-				)}
-			</Swiper>
+				<Swiper
+					allowTouchMove={false}>
+					{questions && questions.map((question, i) =>
+						<SwiperSlide key={i}>
+							<Question questionNumber={i} question={question} onPick={onPick} />
+							<SwiperButton shown={displayButtonNext} onClick={toggleDisplayButtonNext} />
+						</SwiperSlide>
+					)}
+				</Swiper>
 
-			{done &&
-				<div className="my-5 flex gap-8 justify-center">
-					<Button onClick={tryRefresh}>Ещё тест</Button>
-					<Button dark href="/">На главную</Button>
-				</div>
-			}
-		</main>
+				{done &&
+					<div className="my-5 flex gap-8 justify-center">
+						<Button onClick={tryRefresh}>Ещё тест</Button>
+						<Button dark href="/">На главную</Button>
+					</div>
+				}
+			</main>
+		}
+
+		{!localToken &&
+			<main className="container text-center">
+				<h1>Пожалуйста, <Link href="login" className="underline">войдите в аккаунт</Link></h1>
+			</main>
+		}
 	</>
 }
