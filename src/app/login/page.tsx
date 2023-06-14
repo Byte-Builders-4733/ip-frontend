@@ -13,18 +13,33 @@ export default function Login() {
 		e.preventDefault();
 
 		const url = new URL('/auth/token/login/', process.env.API)
-		url.searchParams.append('format', 'json')
 
 		const data = new FormData(e.target);
+
+		const get_user = async (token: any) => {
+			const url = new URL('/auth/users/me/', process.env.API)
+			const headers = new Headers();
+			headers.append('Authorization', `Token ${token}`)
+
+			const req = await fetch(url, {
+				headers: headers,
+			});
+			const data = await req.json();
+			return [data.email, data.username];
+		}
 
 		fetch(url, {
 			method: 'POST',
 			body: data
 		})
 			.then(res => res.json())
-			.then(res => {
+			.then(async res => {
 				if (res.auth_token) {
-					localStorage.setItem('auth_token', res.auth_token)
+					localStorage.setItem('auth_token', res.auth_token);
+					const [email, username] = await get_user(res.auth_token);
+					localStorage.setItem('email', email);
+					localStorage.setItem('username', username);
+
 					window.location.href = '/';
 					return;
 				}

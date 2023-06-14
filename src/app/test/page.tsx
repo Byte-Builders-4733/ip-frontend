@@ -15,7 +15,6 @@ import SwiperButton from '@/components/SwiperButton';
 
 export default function Test() {
 	const [questions, setQuestions] = useState<IQuestion[]>();
-	const [questionss, setQuestionss] = useState<IQuestion[]>();
 	const rightCount = useRef(0);
 	const totalCount = useRef(0);
 	const [displayButtonNext, setDisplayButtonNext] = useState(false);
@@ -27,19 +26,8 @@ export default function Test() {
 		fetch(url, {cache: 'no-store'})
 			.then(res => res.json())
 			.then(res => setQuestions(res))
-		// setQuestions([{
-		// 	question: 'Ценности, принципы и правила взаимодействия команды для быстрой разработки программного обеспечения',
-		// 	options: ['Аджайл', 'Гол', 'Дикшинари'],
-		// 	right: 0,
-		// },
-		// {
-		// 	question: 'Ценности, принципы и правила взаимодействия команды для быстрой разработки программного обеспечения',
-		// 	options: ['Аджайл', 'Гол', 'Дикшинари'],
-		// 	right: 0,
-		// }])
 	}, [setQuestions])
 
-	
 
 	const toggleDisplayButtonNext = () => { setDisplayButtonNext(!displayButtonNext) }
 
@@ -49,8 +37,18 @@ export default function Test() {
 
 		if (totalCount.current !== questions!.length)
 			toggleDisplayButtonNext();
-		else{
-			// hack
+		else {
+			const url = new URL('/testsucc/', process.env.API)
+
+			const headers = new Headers();
+			headers.append('Authorization', `Token ${localStorage.getItem('auth_token')}`);
+
+
+			fetch(url, {
+				method: 'PUT',
+				headers: headers,
+			});
+
 			localStorage.setItem('testCount', (Number(localStorage.getItem('testCount')) + 1).toString())
 			setDone(true);}
 	}
@@ -66,7 +64,6 @@ export default function Test() {
 				{questions && questions.map((question, i) =>
 					<SwiperSlide key={i}>
 						<Question questionNumber={i} question={question} onPick={onPick} />
-						{/* </div> */}
 						<SwiperButton shown={displayButtonNext} onClick={toggleDisplayButtonNext} />
 					</SwiperSlide>
 				)}
@@ -75,7 +72,6 @@ export default function Test() {
 			{done &&
 				<div className="my-5 flex gap-8 justify-center">
 					<Button onClick={tryRefresh}>Ещё тест</Button>
-					{/* <Button onClick={() => { () => {()} }}>Ещё тест</Button> */}
 					<Button dark href="/">На главную</Button>
 				</div>
 			}

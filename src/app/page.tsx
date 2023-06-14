@@ -23,7 +23,6 @@ export default function Index() {
 
 	const updateWordList = (c = '') => {
 		const url = new URL(c ? `/api/${c}/` : '/api/v1/words/', process.env.API!);
-		// url.searchParams.append('format', 'json')
 		fetch(url, {cache: 'force-cache'})
 			.catch(err => {setDisplayTable(false); setError(err)})
 			.then(res => res ? res.json(): null)
@@ -57,13 +56,6 @@ export default function Index() {
 				<Input type="search" id="search" className="w-full pl-14" placeholder="Введите название термина" onChange={onSearchChange} />
 
 				<Button type='button' className="absolute right-0 bottom-0 h-full" onClick={() => updateWordList(searchValue)} dark>Поиск</Button>
-				{/* <button type="submit" className="text-white absolute right-0 bottom-0
-					hover:bg-zinc-600
-					bg-shadow
-					h-full
-					focus:ring-4 focus:outline-none focus:ring-blue-300
-					font-medium rounded-2xl text-sm px-4 py-2"
-				>Поиск</button> */}
 			</form>
 			
 			<p className="font-semibold mb-6">Узнайте особенности IT сленга</p>
@@ -79,11 +71,6 @@ export default function Index() {
 							)}
 						</p>
 					)}
-					{/* <p className="flex flex-wrap justify-center">
-						{charsEn.map((c, i) =>
-							<Link href="" key={i} className="inline-block text-2xl px-2 underline hover:no-underline hover:text-zinc-600" onClick={() => updateWordList(c)}>{c}</Link>
-						)}
-					</p> */}
 				</div>
 			}
 
