@@ -55,7 +55,7 @@ export default function Signup() {
 				<span className="input-error">{usernameError}</span>
 				<Input className={`w-full mt-4 transition-all duration-100 ${passwordError ? 'border-red-700': ''}`} name="password" placeholder="Пароль" type="password" required />
 				<span className="input-error">{passwordError}</span>
-				<Button type="submit" className="!text-lg !px-16 my-8">Зарегестрироваться</Button>
+				<Button type="submit" className="!text-lg !px-16 my-8">Зарегистрироваться</Button>
 			</form>
 		</main>
 	</>
